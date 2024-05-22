@@ -1,0 +1,2 @@
+fastapi
+alembic==1.11.1
