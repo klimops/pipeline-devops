@@ -1,9 +1,19 @@
 from fastapi import FastAPI
-from app.routers import api_router
+import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title='WorkoutApi')
-app.include_router(api_router)
+app = FastAPI(title='API')
+app.add_middleware(
+    CORSMiddleware,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=True,
+    allow_origins=["http://localhost", "http://localhost:3000"]
+)
 
-@app.get("/")
-def hello_world():
-    return {"message": "Funcionando"}
+@app.get("/get_data")
+async def hello_world():
+    return {"message": "Acessando pelo frontend"}
+
+if __name__ == '__main__':
+    uvicorn.run(app, host='0.0.0.0', port=8000)

@@ -3,6 +3,7 @@ services:
     build:
       context: frontend
       target: development
+    container_name: frontend
     ports:
       - 3000:3000
     volumes:
@@ -14,7 +15,7 @@ services:
 
   backend:
     build: ./backend
-    container_name: fastapi
+    container_name: backend
     environment:
       PORT: 8000
     ports:
@@ -22,6 +23,7 @@ services:
     restart: "no"    
 
   proxy:
+    container_name: proxy
     image: nginx
     volumes:
       - type: bind

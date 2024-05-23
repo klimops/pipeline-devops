@@ -2,11 +2,9 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9-slim AS builder
 
 WORKDIR /backend
 
-COPY requirements.txt .
+COPY . .
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r ./requirements.txt
-
-COPY . ./backend
 
 FROM builder as dev-envs
 
@@ -23,3 +21,5 @@ usermod -aG docker vscode
 EOF
 
 COPY --from=gloursdocker/docker / /
+
+CMD [ "python3", "main.py" ]
